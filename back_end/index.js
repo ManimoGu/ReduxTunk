@@ -1,56 +1,33 @@
 const express = require("express")
 const cors = require("cors")
+const TasksRouter = require("./Routes/Tasks")
+const UserRouter = require("./Routes/user")
 
 const app = express()
+
 app.use(cors())
+
+app.use(express.json())
 
 const port = 9000
 
 app.listen(port, ()=> console.log("app is running on port 9000"))
 
-let users = [{
-    login : "user1",
-    password : "password1"
-},
-{
-    login : "user2",
-    password : "3456"
-}
-]
-
-let tasks = [
+ let tasks = [
     {
         titre : "Coding",
-        user : "user1"
+        status : false
     },
     {
         titre : "Reading",
-        user : "user2"
-    },
-    {
-        titre : "Going out",
-        user : "user1"
-    },
-    {
-        titre : "Eating",
-        user : "user2"
+        status : false
     }
-]
+ ]
 
 
-app.get("/Tasks", (req,res)=>{
+ app.get("/List", (req,res)=>{
 
     res.send(tasks)
 
-})
-
-app.get("/AddTask/name/:name/user/:user", (req,res) =>{
-
-    const title = req.params.name
-    const user = req.params.user
-    
-    tasks.push({titre : title, user : user})
-      res.send(tasks)
-})
-
+ })
 

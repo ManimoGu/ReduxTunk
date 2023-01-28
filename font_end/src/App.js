@@ -1,35 +1,36 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import {getTasks} from "./Data/Reducer"
-import {useDispatch, useSelector} from "react-redux"
+import { useEffect, useState } from "react";
+import "./App.css";
+import axios from "axios"
 
 function App() {
+  
+  const [list,setList] = useState([])
 
-  const dispatch = useDispatch()
 
-  useEffect(() =>{
+  useEffect(()=>{
 
-    dispatch(getTasks())
+    axios.get("http://localhost:9000/List")
+    .then(res => setList(res.data))
+    .catch(err => console.log(err.data.message))
 
   },[])
+
    
-  const tasks = useSelector(state => state.Tasks.list)
- 
-
     
-  return (
-    <div className="App">
-     
-     {
-      tasks.map(item => (
-        <>
-        <p>{item.titre}</p>
-        </>
-      ))
-     }
+  
 
-     
+  return (
+    <div>
+      {
+        list.map(item=>(
+          <>
+          <h1>{item.titre}</h1>
+          </>
+        ))
+      
+      }
     </div>
+   
   );
 }
 
